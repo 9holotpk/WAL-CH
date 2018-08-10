@@ -1,6 +1,6 @@
 // DEV. EXTENTION BY 9holotpk
 // Saves options to chrome.storage
-var whatsAppURL = "https://web.whatsapp.com/";
+var whatsChatURL = "https://web.whatsapp.com/";
 var thisTabID;
 chrome.tabs.getCurrent(function(tabs){
 	thisTabID = tabs.id;
@@ -22,7 +22,7 @@ function save_options() {
 	    	status.textContent = '';
 	    	if(reload == true){
 	    		//console.log('log: Closed Options and Reload.');
-	    		chrome.tabs.query({ url: whatsAppURL + "*" }, function(tabs){
+	    		chrome.tabs.query({ url: whatsChatURL + "*" }, function(tabs){
 	    	        if(tabs.length > 0){
 	    	        	var winID = tabs[0].windowId;
 	    	        	chrome.tabs.reload(tabs[0].id);

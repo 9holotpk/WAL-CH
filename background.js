@@ -1,5 +1,5 @@
 // DEV. EXTENTION BY 9holotpk
-var whatsAppURL = "https://web.whatsapp.com/";
+var whatsChatURL = "https://web.whatsapp.com/";
 var readTitle;
 var tabID;
 var res = "";
@@ -7,7 +7,7 @@ var status = ''; // 'contact' default
 chrome.browserAction.setBadgeText({ text: "" });
 
 function checkQR (what){
-	chrome.tabs.query({ url: whatsAppURL + "*" }, function(tabs){
+	chrome.tabs.query({ url: whatsChatURL + "*" }, function(tabs){
 		chrome.tabs.sendMessage(tabs[0].id, {line: 'countparas'});
 		// console.log('sendMessage * ' + tabs[0].id);
 	});
@@ -27,7 +27,7 @@ function checkQR (what){
 }
 
 function checkBadge() {
-	chrome.tabs.query({ url: whatsAppURL + "*", status: 'complete' }, function(tabs){
+	chrome.tabs.query({ url: whatsChatURL + "*", status: 'complete' }, function(tabs){
 		if(tabs.length > 0){
 			tabID = tabs[0].id;
 			// # Load options saved.
@@ -41,7 +41,7 @@ function checkBadge() {
 			// # Check status by options.
 			if (status == 'none') {
 				chrome.browserAction.setBadgeText({ text: "" });
-				chrome.browserAction.setTitle({title: 'WhatsApp Launcher'})
+				chrome.browserAction.setTitle({title: 'WhatsChat'})
 			} else {
 				var f = readTitle.indexOf("(");
 				var e = readTitle.indexOf(")");
@@ -51,7 +51,7 @@ function checkBadge() {
 					chrome.browserAction.setBadgeText({ text: res });
 					chrome.browserAction.setBadgeBackgroundColor({ color: "#ff0000" });
 				}else{
-					chrome.browserAction.setTitle({title: 'WhatsApp Launcher'})
+					chrome.browserAction.setTitle({title: 'WhatsChat'})
 					chrome.browserAction.setBadgeText({ text: "on" });
 					chrome.browserAction.setBadgeBackgroundColor({ color: "#000000" });
 				}
@@ -67,14 +67,14 @@ function setBadgeQR() {
 }
 
 function setBadgeOn() {
-	chrome.browserAction.setTitle({title: 'WhatsApp Launcher'})
+	chrome.browserAction.setTitle({title: 'WhatsChat'})
 	chrome.browserAction.setBadgeText({ text: "on" });
 	chrome.browserAction.setBadgeBackgroundColor({ color: "#000000" });
 }
 
 chrome.browserAction.onClicked.addListener(function(){
 	// # Check WhatsApp tab.
-	chrome.tabs.query({ url: whatsAppURL + "*" }, function(tabs){
+	chrome.tabs.query({ url: whatsChatURL + "*" }, function(tabs){
         if(tabs.length > 0){
         	var winID = tabs[0].windowId;
     		chrome.windows.update(winID, { focused: true });   		
@@ -82,7 +82,7 @@ chrome.browserAction.onClicked.addListener(function(){
             checkQR('by Click');
         }else{
 			// # Create new window chat.
-        	chrome.windows.create({url: whatsAppURL, type: "popup", width: 685, height: 620, top: 50, left: 50});
+        	chrome.windows.create({url: whatsChatURL, type: "popup", width: 685, height: 620, top: 50, left: 50});
 			checkQR('by Click');
         }
     });	
@@ -102,6 +102,6 @@ chrome.tabs.onUpdated.addListener(function(tabsU, changeInfo, tab){
 chrome.tabs.onRemoved.addListener(function (tabsR, removeInfo){
 	if(tabsR==tabID){
 		chrome.browserAction.setBadgeText({ text: "" });
-		chrome.browserAction.setTitle({title: 'WhatsApp Launcher'});
+		chrome.browserAction.setTitle({title: 'WhatsChat'});
 	}
 });
